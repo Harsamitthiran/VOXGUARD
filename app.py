@@ -17,8 +17,12 @@ import sys
 import time
 from typing import Any, Dict, Optional, Tuple
 
-# Prevent permission issues on restricted sandbox environments
+# Ensure root directory is in sys.path for Streamlit Cloud and remote deployments
 local_dir = os.path.dirname(os.path.abspath(__file__))
+if local_dir not in sys.path:
+    sys.path.insert(0, local_dir)
+
+# Prevent permission issues on restricted sandbox environments
 if "HOME" not in os.environ:
     os.environ["HOME"] = local_dir
 if "STREAMLIT_CONFIG_DIR" not in os.environ:
